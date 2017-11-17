@@ -12,14 +12,26 @@ class TopSaleDepartmentRow(object):
 
 	数据形如:
 	<tr><td><nobr>2017-11-16</nobr></td><td><a href="http://quote.cfi.cn/quote_000038.html" target=_blank>000038</a></td><td>深 大 通</td><td>22.660</td><td><font color=red>10.000%</font></td><td>东方证券股份有限公司北京安苑路证券营业部</td><td>0</td><td>1983.203</td><td>日涨幅偏离值达7%</td></tr>
+
+	date : datetime类型,日期
+	code : int类型,个股代码
+	name : string类型,个股名称
+	close : float类型,当天收盘价
+	percent : float类型,当天涨跌幅(%)
+	departement : string类型,发生的营业部
+	buy : float类型,买入金额(万元,None表示该数据不明,原始数据为保留--)
+	sell : float类型,卖出金额(万元,None表示不明,原始数据为保留--)
+	comment : string类型,备注
 	'''
 	def __init__(self, line):
 		self.original = line
 		self.parseLine()
 
 	def __str__(self):
-		s = '%s %06d %s %.2f %.2f%% %s %.2f %.2f %s' % (\
-			str(self.date), self.code, self.name, self.close, self.percent, self.departement, self.buy, self.sell, self.comment)
+		s = '%s %06d %s %.2f %.2f%% %s %s %s %s' % (\
+			str(self.date), self.code, self.name, \
+			self.close, self.percent, self.departement, \
+			self.buy, self.sell, self.comment)
 		return s
 
 	def parseLine(self):
@@ -122,7 +134,7 @@ class TopSaleDepartmentRow(object):
 		try:
 			self.buy = float(t)
 		except Exception,e:
-			self.buy = 0.0
+			self.buy = None
 
 	def parseSellAmount(self, s):
 		'''
@@ -136,7 +148,7 @@ class TopSaleDepartmentRow(object):
 		try:
 			self.sell = float(t)
 		except Exception,e:
-			self.sell = 0.0
+			self.sell = None
 
 	def parseComment(self, s):
 		'''
