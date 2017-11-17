@@ -28,7 +28,7 @@ class TopSaleDepartmentRow(object):
 		self.parseLine()
 
 	def __str__(self):
-		s = '%s %06d %s %.2f %.2f%% %s %s %s %s' % (\
+		s = '%s,%06d,%s,%.2f,%.2f%%,%s,%s,%s,%s' % (\
 			str(self.date), self.code, self.name, \
 			self.close, self.percent, self.departement, \
 			self.buy, self.sell, self.comment)
